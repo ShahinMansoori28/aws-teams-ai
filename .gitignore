@@ -1,0 +1,11 @@
+node_modules/
+dist/
+cdk.out/
+.next/
+.open-next/
+.env
+.env.*
+!.env.example
+infra/cdk.context.json
+*.log
+.DS_Store
