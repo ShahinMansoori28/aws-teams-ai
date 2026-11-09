@@ -1,0 +1,26 @@
+{
+  "name": "aws-teams-ai",
+  "private": true,
+  "workspaces": [
+    "infra",
+    "services",
+    "scripts",
+    "web"
+  ],
+  "scripts": {
+    "floci:up": "docker compose up -d --wait",
+    "floci:down": "docker compose down",
+    "floci:logs": "docker logs floci --tail 100",
+    "test": "npm run test --workspaces --if-present",
+    "typecheck": "tsc -p infra --noEmit && tsc -p services --noEmit && tsc -p scripts --noEmit",
+    "deploy:local": "npm -w scripts run deploy-local",
+    "spike": "npm -w scripts run spike",
+    "dev": "npm -w web run dev"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "tsx": "^4",
+    "typescript": "^5",
+    "vitest": "^5"
+  }
+}

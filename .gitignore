@@ -9,3 +9,5 @@ cdk.out/
 infra/cdk.context.json
 *.log
 .DS_Store
+next-env.d.ts
+*.tsbuildinfo

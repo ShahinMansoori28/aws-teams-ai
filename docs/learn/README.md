@@ -14,7 +14,11 @@ Big picture first: [architecture.md](architecture.md). Every "why X over Y" is i
 - [ ] [decisions/](decisions/README.md): skim the table, then read 0003, 0004 and 0007 (the core ideas)
 
 ## Step 1: Skeleton (CDK, Floci, Lambda, HTTP API, DynamoDB) + Floci spike
-Prove the risky parts work on Floci: WebSocket push, Lambda streaming, Streams → Lambda, Bedrock mock.
+- [ ] [01-skeleton.md](01-skeleton.md): what CDK is, how a request reaches a Lambda, what the spike found
+- [ ] [floci-compat.md](floci-compat.md): what works locally (9/10) and the one gap
+- [ ] Code: follow the "How to navigate" list in 01-skeleton.md
+- [ ] Try: `npm run floci:up`, `npm run deploy:local`, `npm run dev`, then open http://localhost:3000
+- [ ] Try: the "break it on purpose" exercise at the end of 01-skeleton.md
 
 ## Step 2: Login (Cognito, BFF, httpOnly cookies, CSRF)
 

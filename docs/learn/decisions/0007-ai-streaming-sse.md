@@ -16,4 +16,4 @@ For **@ai in a channel**, everyone needs the reply. There the bot streams over t
 
 **Limits** (AWS docs, verified): 200 MB per stream, 15 min max, Node runtimes only. The Lambda keeps running (and billing) if the user closes the tab, so we stop when the client disconnects.
 
-**Consequences.** CloudFront OAC needs a body hash on POST requests (`x-amz-content-sha256`). Simpler for us: a secret origin header plus a cookie check. Floci support for streaming is **unverified**, so it's tested in the Step 1 spike.
+**Consequences.** CloudFront OAC needs a body hash on POST requests (`x-amz-content-sha256`). Simpler for us: a secret origin header plus a cookie check. **Update 2026-11-10 (Step 1 spike):** Floci's Function URL drops streamed bodies ([floci#7837](https://github.com/floci-io/floci/issues/7837)). Locally, the same handler runs in a small Node dev server that mimics Lambda streaming. On AWS it's the real Function URL.
