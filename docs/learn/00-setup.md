@@ -20,6 +20,9 @@ Flags: `--id ... -e` means "exactly this package", and `--silent` means "no inst
 3. `winget install --id Docker.DockerDesktop -e --silent` installed Docker Desktop 4.99.0 (another UAC popup).
 4. First Docker Desktop launch: accept the license, skip sign-in (no Docker account needed), wait for "Engine running".
 
+5. GitHub login: `gh auth login --web` shows an 8-character code. Enter it at https://github.com/login/device within 15 minutes, or it expires.
+6. `gh auth setup-git` lets plain `git push` use that login. Without it, git asks for a username and fails.
+
 The laptop has 7.4 GB RAM. Docker + Floci + Lambda containers use about 2-3 GB, so close heavy browser tabs while running the app.
 
 ## Check it worked
