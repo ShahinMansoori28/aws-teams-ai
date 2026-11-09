@@ -13,6 +13,15 @@ What got installed, why, and the exact command. All installs use **winget**, the
 
 Flags: `--id ... -e` means "exactly this package", and `--silent` means "no installer wizard". Windows still shows a **UAC popup** ("allow changes?") because installing software needs admin rights.
 
+## What actually happened (2026-11-09)
+
+1. `winget install --id Amazon.AWSCLI -e --silent` installed aws-cli 2.39.5. It sat on "Starting package install..." until the UAC popup ("…msi is requesting your permission") got a **Yes**. The popup can hide behind other windows, so look for a flashing shield in the taskbar.
+2. `winget install --id GitHub.cli -e --silent` installed gh 2.103.3.
+3. `winget install --id Docker.DockerDesktop -e --silent` installed Docker Desktop 4.99.0 (another UAC popup).
+4. First Docker Desktop launch: accept the license, skip sign-in (no Docker account needed), wait for "Engine running".
+
+The laptop has 7.4 GB RAM. Docker + Floci + Lambda containers use about 2-3 GB, so close heavy browser tabs while running the app.
+
 ## Check it worked
 
 Open a **new** terminal (so it picks up the new PATH), then:
