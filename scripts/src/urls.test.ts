@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { localApiUrl, localFunctionUrl, localWsUrls } from "./urls.js";
+import { devEnvFile, localApiUrl, localFunctionUrl, localWsUrls } from "./urls.js";
 
 describe("local URLs", () => {
   it("HTTP API", () => {
@@ -19,5 +19,14 @@ describe("local URLs", () => {
 
   it("rejects junk", () => {
     expect(() => localApiUrl("https://example.com")).toThrow();
+  });
+});
+
+describe("devEnvFile", () => {
+  it("writes server-only settings, nothing NEXT_PUBLIC_", () => {
+    const f = devEnvFile({ apiUrl: "http://a", userPoolId: "us-east-1_X", userPoolClientId: "c1" });
+    expect(f).toContain("USER_POOL_ID=us-east-1_X\n");
+    expect(f).toContain("USER_POOL_CLIENT_ID=c1\n");
+    expect(f).not.toContain("NEXT_PUBLIC_");
   });
 });

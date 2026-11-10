@@ -29,7 +29,23 @@ function apiId(url: string): string {
   return m[1];
 }
 
-/** web/.env.development.local: server settings for `next dev`. Ids change on every fresh deploy. */
-export function devEnvFile(v: { apiUrl: string }): string {
-  return [`API_URL=${v.apiUrl}`, ""].join("\n");
+export interface DevEnv {
+  apiUrl: string;
+  userPoolId: string;
+  userPoolClientId: string;
+}
+
+/**
+ * web/.env.development.local: server-only settings for `next dev` (no NEXT_PUBLIC_ prefix,
+ * so none of it is sent to the browser). Ids change on every fresh deploy.
+ */
+export function devEnvFile(v: DevEnv): string {
+  return [
+    `API_URL=${v.apiUrl}`,
+    "COGNITO_ENDPOINT=http://localhost:4566",
+    "COGNITO_REGION=us-east-1",
+    `USER_POOL_ID=${v.userPoolId}`,
+    `USER_POOL_CLIENT_ID=${v.userPoolClientId}`,
+    "",
+  ].join("\n");
 }

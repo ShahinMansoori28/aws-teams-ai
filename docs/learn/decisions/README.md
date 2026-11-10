@@ -20,5 +20,12 @@ Format: **Context** (the problem) · **Decision** · **Why not the others** · *
 | [0012](0012-search.md) | Search with a DynamoDB word index | Accepted |
 | [0013](0013-notifications.md) | In-app unread + Web Push | Accepted |
 | [0014](0014-region-and-cost.md) | Sydney region, $5 budget, Free plan facts | Accepted |
+| [0015](0015-sign-in-own-form.md) | Own sign-in form, BFF calls Cognito (USER_PASSWORD_AUTH) | Accepted |
+| [0016](0016-email-sign-in-verified.md) | Email sign-in, verified by code on both stages | Accepted |
+| [0017](0017-tokens-and-cookies.md) | Access token to the API, httpOnly cookies, refresh by redirect | Accepted |
+| [0018](0018-csrf.md) | CSRF: Origin check + JSON-only bodies | Accepted |
+| [0019](0019-unique-handles.md) | Unique @handles: claim item + transaction, picked at onboarding | Accepted |
+| [0020](0020-mfa-totp.md) | Optional MFA with an authenticator app (TOTP) | Accepted |
+| [0021](0021-sign-out.md) | Sign-out revokes refresh tokens; access tokens expire | Accepted |
 
-Research date for all prices and limits: **2026-11-08**. Prices change, so re-check before you rely on them.
+Research date for prices and limits: **2026-11-08** (0001-0014), **2026-11-10** (0015-0021). Prices change, so re-check before you rely on them.

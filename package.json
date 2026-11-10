@@ -12,9 +12,12 @@
     "floci:down": "docker compose down",
     "floci:logs": "docker logs floci --tail 100",
     "test": "npm run test --workspaces --if-present",
-    "typecheck": "tsc -p infra --noEmit && tsc -p services --noEmit && tsc -p scripts --noEmit",
+    "test:int": "npm -w services run test:int",
+    "typecheck": "tsc -p infra --noEmit && tsc -p services --noEmit && tsc -p scripts --noEmit && tsc -p web --noEmit",
     "deploy:local": "npm -w scripts run deploy-local",
     "spike": "npm -w scripts run spike",
+    "mail": "npm -w scripts run mail --",
+    "smoke:auth": "npm -w scripts run smoke-auth",
     "dev": "npm -w web run dev"
   },
   "devDependencies": {

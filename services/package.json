@@ -3,7 +3,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:int": "vitest run -c vitest.int.config.ts"
   },
   "dependencies": {
     "@aws-lambda-powertools/logger": "^2.36.0",

@@ -21,6 +21,12 @@ Big picture first: [architecture.md](architecture.md). Every "why X over Y" is i
 - [ ] Try: the "break it on purpose" exercise at the end of 01-skeleton.md
 
 ## Step 2: Login (Cognito, BFF, httpOnly cookies, CSRF)
+- [ ] [02-auth.md](02-auth.md): tokens, cookies, CSRF, unique handles, MFA, why JWTs can't be taken back
+- [ ] Decisions [0015](decisions/0015-sign-in-own-form.md)-[0021](decisions/0021-sign-out.md): read 0017 and 0021 first
+- [ ] Code: follow the "How to navigate" list in 02-auth.md
+- [ ] Try: create an account in the browser, get the code with `npm run mail`, turn on an authenticator app
+- [ ] Try: `npm run smoke:auth` (with `npm run dev` running) and `npm run test:int`
+- [ ] Try: the three "break it on purpose" exercises
 
 ## Step 3: Channels + DMs over HTTP (single-table design, cursor pagination)
 

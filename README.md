@@ -13,7 +13,8 @@ You learn HTTP APIs, WebSockets, SSE streaming, Lambda, DynamoDB, Cognito, S3, B
 npm install
 npm run floci:up          # local AWS in Docker (keeps state across restarts)
 npm run deploy:local      # deploy the stack to Floci
-npm run dev               # http://localhost:3000
+npm run dev               # http://localhost:3000 → create an account
+npm run mail              # sign-up / reset codes (Floci's fake inbox)
 ```
 
 ## Check it
@@ -21,17 +22,20 @@ npm run dev               # http://localhost:3000
 ```powershell
 npm test                  # unit + template tests
 npm run typecheck
+npm run test:int          # integration tests on Floci's DynamoDB
+npm run smoke:auth        # end-to-end login flows (needs npm run dev)
 npm run spike             # regenerate docs/learn/floci-compat.md
 ```
 
 ## Layout
-- `infra/`: CDK app (`lib/core-stack.ts`, `lib/config.ts` = everything that differs per stage)
+- `infra/`: CDK app (`lib/core-stack.ts`, `lib/auth.ts`, `lib/config.ts` = everything that differs per stage)
 - `services/`: Lambda handlers
-- `web/`: Next.js app (server-rendered; it will be the browser's only backend)
-- `scripts/`: deploy, spike
+- `web/`: Next.js app; its `app/bff/` routes are the browser's only backend
+- `scripts/`: deploy, spike, mail, smoke tests
 - `docs/learn/`: one doc per step + architecture + decision records + Floci compatibility report
 
 ## Status
-Step 1 done: skeleton + Floci spike (9/10, one gap reported upstream as [floci#7837](https://github.com/floci-io/floci/issues/7837)).
+- Step 1 done: skeleton + Floci spike (9/10; the one gap is reported upstream, see [floci-compat.md](docs/learn/floci-compat.md)).
+- Step 2 done: Cognito login with email codes, httpOnly cookies, CSRF, unique @handles, optional TOTP MFA, sign out everywhere.
 
 Inspired by [Am4nn/aws-instagram-lite](https://github.com/Am4nn/aws-instagram-lite).

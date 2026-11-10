@@ -31,6 +31,15 @@ with the features we weren't sure Floci supports, pokes each through real client
   Template tests (`infra/lib/*.test.ts`) are what catch missing permissions before real AWS does.
 - **WebSocket management endpoint.** Inside a Floci Lambda, `https://<domainName>/<stage>` (the AWS form) fails;
   `http://<apiId>.execute-api.localhost.floci.io:4566/<stage>` works. Step 4 reads it from config per stage.
+- **User pool `EnabledMfas` is ignored by CloudFormation** (step 2). The pool comes up refusing authenticator
+  apps (`SoftwareTokenMFANotFoundException`). `deploy:local` calls `SetUserPoolMfaConfig` after each deploy.
+
+## Step 2 checks (Cognito), run by `npm run smoke:auth`
+
+Work on Floci: sign-up emails land in Floci's SES inbox (`/_aws/ses`), confirm / forgot / reset codes,
+`USER_PASSWORD_AUTH`, refresh, `RevokeToken`, `GlobalSignOut`, TOTP setup + `SOFTWARE_TOKEN_MFA` challenge,
+HTTP API JWT authorizer with access tokens (`client_id` checked against the audience list) and
+`AuthorizationScopes` (an ID token gets 403), DynamoDB transactions under a 20-way race.
 
 Already proven by the reference project (Am4nn/aws-instagram-lite, Floci 2.4.0): CDK deploy, Cognito +
 HTTP API JWT authorizer, S3 presigned uploads, SQS, SNS, EventBridge, CloudWatch alarms, CloudFront, Function URLs (non-streaming).

@@ -5,12 +5,15 @@
   "scripts": {
     "test": "vitest run",
     "deploy-local": "tsx src/deploy-local.ts",
-    "spike": "tsx src/spike-check.ts"
+    "spike": "tsx src/spike-check.ts",
+    "mail": "tsx src/mail-cli.ts",
+    "smoke-auth": "tsx src/smoke-auth.ts"
   },
   "dependencies": {
     "@aws-sdk/client-apigatewaymanagementapi": "^3.1163.0",
     "@aws-sdk/client-bedrock-runtime": "^3.1163.0",
     "@aws-sdk/client-cloudformation": "^3.1163.0",
+    "@aws-sdk/client-cognito-identity-provider": "^3.1165.0",
     "@aws-sdk/client-dynamodb": "^3.1163.0",
     "@aws-sdk/client-ssm": "^3.1163.0",
     "@aws-sdk/lib-dynamodb": "^3.1163.0"

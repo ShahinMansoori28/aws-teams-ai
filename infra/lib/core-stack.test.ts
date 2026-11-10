@@ -31,13 +31,52 @@ describe("CoreStack", () => {
   });
 
   it("health may only read (no write actions)", () => {
-    const policies = t.findResources("AWS::IAM::Policy");
+    const policies = t.findResources("AWS::IAM::Policy", {
+      Properties: { Roles: [{ Ref: Match.stringLikeRegexp("^Health") }] },
+    });
     const actions = JSON.stringify(policies);
+    expect(Object.keys(policies)).toHaveLength(1);
     expect(actions).toContain("dynamodb:GetItem");
     expect(actions).not.toContain("dynamodb:PutItem");
   });
 
-  it("GET /health route exists", () => {
-    t.hasResourceProperties("AWS::ApiGatewayV2::Route", { RouteKey: "GET /health" });
+  it("GET /health is public; /me needs the Cognito JWT authorizer", () => {
+    t.hasResourceProperties("AWS::ApiGatewayV2::Route", { RouteKey: "GET /health", AuthorizationType: "NONE" });
+    for (const RouteKey of ["GET /me", "PUT /me"]) {
+      t.hasResourceProperties("AWS::ApiGatewayV2::Route", {
+        RouteKey, AuthorizationType: "JWT", AuthorizerId: Match.anyValue(),
+        AuthorizationScopes: ["aws.cognito.signin.user.admin"], // access tokens only
+      });
+    }
+  });
+
+  it("user pool: email sign-in, email codes, optional TOTP only", () => {
+    t.hasResourceProperties("AWS::Cognito::UserPool", {
+      UsernameAttributes: ["email"],
+      AutoVerifiedAttributes: ["email"],
+      MfaConfiguration: "OPTIONAL",
+      EnabledMfas: ["SOFTWARE_TOKEN_MFA"],
+    });
+  });
+
+  it("app client: password flow, no secret, 1 h access / 30 day refresh, revocation on", () => {
+    t.hasResourceProperties("AWS::Cognito::UserPoolClient", {
+      ExplicitAuthFlows: Match.arrayWith(["ALLOW_USER_PASSWORD_AUTH", "ALLOW_REFRESH_TOKEN_AUTH"]),
+      GenerateSecret: false,
+      AccessTokenValidity: 60,
+      RefreshTokenValidity: 43200,
+      EnableTokenRevocation: true,
+      PreventUserExistenceErrors: "ENABLED",
+    });
+  });
+
+  it("JWT authorizer trusts Floci's issuer and checks our client id", () => {
+    t.hasResourceProperties("AWS::ApiGatewayV2::Authorizer", {
+      AuthorizerType: "JWT",
+      JwtConfiguration: {
+        Issuer: { "Fn::Join": ["", ["http://127.0.0.1:4566/", Match.anyValue()]] },
+        Audience: [Match.anyValue()],
+      },
+    });
   });
 });
